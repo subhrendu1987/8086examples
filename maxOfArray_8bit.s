@@ -12,7 +12,7 @@ src:DB 0x25
       DB 0x59 ; 10 bytes
 length:DB 0x0A
 SET 0x1                 ; set addresss for segment 2
-dest:DB [0,10]               ; store data
+dest:DB 0               ; store data
 
 ; actual entry point of the program
 start:
@@ -22,12 +22,12 @@ start:
     MOV ES, AX          ; to ES
 
     MOV SI, OFFSET src  ; point SI to src array
-    MOV CX, OFFSET length ; number of elements
+    MOV CL, byte length ; number of elements
     MOV DI, OFFSET dest     ; move offset of destination data
     MOV AL, byte DS[SI] ; load first byte into AL (max candidate)
 
     INC SI              ; move to next byte
-    DEC CX              ; already used one byte
+    DEC CL              ; already used one byte
 
 _loop:
     MOV AH, byte DS[SI] ; read next byte into AH
@@ -37,7 +37,7 @@ _loop:
 
 skip_update:
     INC SI              ; move to next byte
-    DEC CX              ; decrement counter
+    DEC CL              ; decrement counter
     JNZ _loop           ; loop if not zero
 
     MOV DL, AL  ; store max at dest[0]

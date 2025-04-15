@@ -24,7 +24,7 @@ start:
     MOV ES, AX
 
     MOV SI, OFFSET src     ; SI points to start of src array
-    MOV CL, OFFSET length  ; Number of 16-bit elements
+    MOV CL, byte length  ; Number of 16-bit elements
     MOV DI, OFFSET dest
     MOV AX, word DS[SI]           ; Load first word into AX (current max)
     ADD SI, 2              ; Move to next word
